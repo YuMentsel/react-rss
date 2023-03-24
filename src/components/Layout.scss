@@ -1,0 +1,68 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    font-size: 3em;
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    height: 100%;
+    font-size: 1.2em;
+    font-weight: 500;
+  }
+}
+
+.main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-grow: 2;
+  width: 100%;
+  color: $active;
+
+  h1 {
+    font-size: 2em;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2em;
+  font-weight: 500;
+  color: $grey;
+
+  &__git {
+    height: 30px;
+    width: 30px;
+    background: url(./assets/svg/github.svg) center center / cover no-repeat;
+  }
+
+  &__rss {
+    height: 22px;
+    width: 60px;
+    background: url(./assets/svg/rs_school.svg) center center / cover no-repeat;
+  }
+}
+
+a,
+a:visited {
+  color: $main;
+  text-decoration: none;
+}
+
+a.active {
+  color: $active;
+}
