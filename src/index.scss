@@ -1,12 +1,3 @@
-$main: #090638;
-$main-light: #0e076d;
-$active: #646cff;
-
-$grey: #9e9e9e;
-$white: #ffffff;
-
-$shadow: rgba(0, 0, 0, 0.15) 0px 10px 20px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
-
 * {
   margin: 0;
   padding: 0;
@@ -19,8 +10,8 @@ body {
   font-family: 'Montserrat', sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  background-color: $white;
-  color: $main;
+  background-color: #ffffff;
+  color: #090638;
   height: 100%;
 }
 
@@ -31,9 +22,11 @@ body {
   height: 100%;
   position: relative;
   max-width: 1440px;
-  padding: 1rem 2rem;
+  padding: 15px 15px 0;
   text-align: center;
 }
 
 @import
-'./components/Layout.scss';
+  './layout/Layout',
+  './components/Search/Search',
+  './components/Card/Card';
