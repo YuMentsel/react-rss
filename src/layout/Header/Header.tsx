@@ -13,6 +13,7 @@ class Header extends React.Component<HeaderTitle> {
         <div className="header__nav">
           <NavLink to="/">Home</NavLink>
           <NavLink to="/about">About Us</NavLink>
+          <NavLink to="/form">Form</NavLink>
         </div>
         <h2>{this.props.title}</h2>
       </header>
