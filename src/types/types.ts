@@ -43,6 +43,7 @@ export interface Errors {
 
 export interface FormState {
   errors: Errors;
+  showСonfirmation: boolean;
 }
 
 export interface strObj {

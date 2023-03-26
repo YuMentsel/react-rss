@@ -15,6 +15,7 @@ class Form extends React.Component<FormAddProps> {
 
   state: FormState = {
     errors: {},
+    showСonfirmation: false,
   };
 
   handleSubmit(e: React.FormEvent) {
@@ -39,6 +40,10 @@ class Form extends React.Component<FormAddProps> {
 
     if (this.validateForm(card)) {
       this.props.onCreateCard(card);
+      this.setState({ showСonfirmation: true });
+      setTimeout(() => {
+        this.setState({ showСonfirmation: false });
+      }, 1500);
       this.form.current?.reset();
     }
   }
@@ -63,7 +68,7 @@ class Form extends React.Component<FormAddProps> {
       errors.date = 'Select the delivery date not earlier than tomorrow.';
     }
 
-    if (!stock) errors.stock = 'Confirm stock status.';
+    if (stock === 'no') errors.stock = 'Confirm stock status.';
     if (!image.length) errors.image = 'Add an image';
 
     this.setState({ errors: errors });
@@ -164,6 +169,8 @@ class Form extends React.Component<FormAddProps> {
         <button type="submit" className="form__button">
           Create card
         </button>
+
+        {this.state.showСonfirmation && <div className="form__confirmation">Card created!</div>}
       </form>
     );
   }
