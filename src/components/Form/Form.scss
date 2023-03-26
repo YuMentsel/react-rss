@@ -5,13 +5,14 @@
   margin: 30px 0;
   width: 500px;
   padding: 30px;
-  height: 500px;
+  height: 520px;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 20px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
   overflow: hidden;
 
   &__wrapper {
     display: flex;
+    position: relative;
   }
 
   &__title {
@@ -101,6 +102,16 @@
   &__radio {
     position: absolute;
     top: 2px;
+  }
+
+  &__error {
+    color: #eb0d6a;
+    position: absolute;
+    top: 35px;
+    font-size: 0.78em;
+    &.stock {
+      top: 28px;
+    }
   }
 
   &__button {

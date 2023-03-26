@@ -11,12 +11,12 @@ export type CardProps = {
 };
 
 export interface NewFormCard {
-  id?: number;
+  id: number;
   title: string;
   type: string;
   date: string;
   discount: string;
-  stock: boolean;
+  stock: string;
   image: string;
 }
 
@@ -31,3 +31,20 @@ export type NewFormCardProps = {
 export type FormAddProps = {
   onCreateCard: (newCard: NewFormCard) => void;
 };
+
+export interface Errors {
+  title?: string;
+  type?: string;
+  date?: string;
+  discount?: string;
+  stock?: string;
+  image?: string;
+}
+
+export interface FormState {
+  errors: Errors;
+}
+
+export interface strObj {
+  ['string']: string;
+}
