@@ -4,7 +4,7 @@ import Form from '../../components/Form';
 import FormCard from '../../components/FormCard';
 import { NewFormCard, NewFormCards } from '../../types/types';
 
-class FormPage extends React.Component<NewFormCards> {
+class FormPage extends React.Component {
   state: NewFormCards = {
     cards: [],
   };

@@ -1,8 +1,6 @@
 import React from 'react';
 import { FormAddProps, FormState, NewFormCard, Errors } from '../../types/types';
-
-const types = ['Succulent', 'Sansevieria', 'Flowering', 'Fern', 'Lavender', 'Cactus', 'Tree'];
-const discount = [0, 10, 20, 50];
+import { types, discount } from '../../data/data';
 
 class Form extends React.Component<FormAddProps> {
   form = React.createRef<HTMLFormElement>();
@@ -69,7 +67,7 @@ class Form extends React.Component<FormAddProps> {
     }
 
     if (stock === 'no') errors.stock = 'Confirm stock status.';
-    if (!image.length) errors.image = 'Add an image';
+    if (!image.length) errors.image = 'Add an image.';
 
     this.setState({ errors: errors });
 
@@ -92,17 +90,23 @@ class Form extends React.Component<FormAddProps> {
           <label className="form__title">Title</label>
           <input
             type="text"
-            placeholder="Add title..."
+            placeholder="Add title"
             ref={this.title}
             onFocus={() => this.handleFocus('title')}
             className="form__input"
+            data-testid="title"
           />
           <div className="form__error">{this.state.errors.title ?? ''}</div>
         </div>
 
         <div className="form__wrapper">
           <label className="form__title">Type</label>
-          <select ref={this.type} onFocus={() => this.handleFocus('type')} className="form__input">
+          <select
+            ref={this.type}
+            onFocus={() => this.handleFocus('type')}
+            className="form__input"
+            data-testid="select"
+          >
             {' '}
             <option value="" key="0">
               Choose type
@@ -148,6 +152,7 @@ class Form extends React.Component<FormAddProps> {
               name="stock"
               ref={this.stock}
               onFocus={() => this.handleFocus('stock')}
+              data-testid="checkbox"
             />
           </label>
           <div className="form__error stock">{this.state.errors.stock ?? ''}</div>
@@ -161,12 +166,13 @@ class Form extends React.Component<FormAddProps> {
               ref={this.date}
               className="form__date-input"
               onFocus={() => this.handleFocus('date')}
+              data-testid="date"
             />
           </label>
           <div className="form__error">{this.state.errors.date ?? ''}</div>
         </div>
 
-        <button type="submit" className="form__button">
+        <button type="submit" className="form__button" data-testid="submit-form">
           Create card
         </button>
 
