@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormAddProps, FormState, NewFormCard, Errors } from '../../types/types';
 import { types, discount } from '../../data/data';
+import { BooleanValue } from '../../types/enums';
 
 class Form extends React.Component<FormAddProps> {
   form = React.createRef<HTMLFormElement>();
@@ -23,7 +24,7 @@ class Form extends React.Component<FormAddProps> {
     const typeValue = this.type.current?.value ?? '';
     const dateValue = this.date.current?.value ?? '';
     const discountValue = this.getDiscountValue();
-    const stockValue = this.stock?.current?.checked ? 'yes' : 'no';
+    const stockValue = this.stock?.current?.checked ? BooleanValue.Yes : '';
     const imageValue = this.image.current?.files?.[0];
 
     const card = {
@@ -47,26 +48,28 @@ class Form extends React.Component<FormAddProps> {
   }
 
   getDiscountValue() {
-    if (!this.discount.current) return '0';
+    if (!this.discount.current) return '';
     const inputs = [...this.discount.current.children].map(
       (child) => child.lastChild as HTMLInputElement
     );
-    return inputs.find((input) => input.checked)?.value || '0';
+    return inputs.find((input) => input.checked)?.value ?? '';
   }
 
   validateForm = (card: NewFormCard) => {
-    const { title, type, date, stock, image } = card;
+    const { title, type, date, discount, stock, image } = card;
 
     const errors: Errors = {};
 
     if (title.length < 3) errors.title = 'Enter minimum 3 characters.';
-    if (!type.length) errors.type = 'Select a card type.';
+    if (!type.length) errors.type = 'Choose a card type.';
 
     if (!(new Date(date) > new Date())) {
       errors.date = 'Select the delivery date not earlier than tomorrow.';
     }
 
-    if (stock === 'no') errors.stock = 'Confirm stock status.';
+    if (!discount) errors.discount = 'Choose a discount size.';
+
+    if (!stock) errors.stock = 'Confirm stock status.';
     if (!image.length) errors.image = 'Add an image.';
 
     this.setState({ errors: errors });
@@ -126,7 +129,7 @@ class Form extends React.Component<FormAddProps> {
             <input
               className="form__img-input"
               type="file"
-              accept=".jpg, .jpeg, .png"
+              accept="image/*"
               ref={this.image}
               onFocus={() => this.handleFocus('image')}
             />
@@ -134,15 +137,22 @@ class Form extends React.Component<FormAddProps> {
           <div className="form__error">{this.state.errors.image ?? ''}</div>
         </div>
 
-        <fieldset ref={this.discount} className="form__fieldset">
-          <label className="form__title">Discount</label>
-          {discount.map((val) => (
-            <label className="form__label" key={val}>
-              {val}
-              <input type="radio" name="discount" value={val} defaultChecked={val === 0} />
-            </label>
-          ))}
-        </fieldset>
+        <div className="form__wrapper">
+          <fieldset
+            ref={this.discount}
+            className="form__fieldset"
+            onFocus={() => this.handleFocus('discount')}
+          >
+            <label className="form__title">Discount</label>
+            {discount.map((val) => (
+              <label className="form__label" key={val}>
+                {val}
+                <input type="radio" name="discount" value={val} />
+              </label>
+            ))}
+          </fieldset>
+          <div className="form__error fieldset">{this.state.errors.discount ?? ''}</div>
+        </div>
 
         <div className="form__wrapper">
           <label className="form__title">

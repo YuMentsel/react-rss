@@ -132,7 +132,8 @@
     position: absolute;
     top: 35px;
     font-size: 0.78em;
-    &.stock {
+    &.stock,
+    &.fieldset {
       top: 28px;
     }
   }

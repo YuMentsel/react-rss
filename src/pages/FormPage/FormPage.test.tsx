@@ -39,7 +39,7 @@ describe('Form', () => {
 
     fireEvent.click(screen.getByTestId('submit-form'));
     expect(screen.getByText('Enter minimum 3 characters.')).toBeInTheDocument();
-    expect(screen.getByText('Select a card type.')).toBeInTheDocument();
+    expect(screen.getByText('Choose a card type.')).toBeInTheDocument();
     expect(screen.getByText('Add an image.')).toBeInTheDocument();
     expect(screen.getByText('Confirm stock status.')).toBeInTheDocument();
   });
