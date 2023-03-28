@@ -1,0 +1,100 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 50%;
+    font-size: 3em;
+    font-weight: 500;
+    line-height: 0.7;
+    margin: 0;
+  }
+
+  &__nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 30px;
+    height: 100%;
+    font-size: 1.2em;
+    font-weight: 500;
+    width: 50%;
+  }
+}
+
+h2 {
+  display: flex;
+  font-size: 2em;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #6b71eb;
+  line-height: 0.8;
+  margin: 0;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-grow: 2;
+  width: 100%;
+  margin-top: 50px;
+  font-size: 1.2em;
+  color: #9e9e9e;
+
+  &_form {
+    align-items: center;
+    justify-content: flex-start;
+
+    h2 {
+      font-size: 1.5em;
+      font-weight: 500;
+    }
+
+    .formCards-list {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      margin-bottom: 30px;
+      gap: 30px;
+    }
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2em;
+  font-weight: 500;
+  color: #9e9e9e;
+  padding-bottom: 15px;
+
+  &__git {
+    height: 30px;
+    width: 30px;
+    background: url(./assets/svg/github.svg) center center / cover no-repeat;
+  }
+
+  &__rss {
+    height: 22px;
+    width: 60px;
+    background: url(./assets/svg/rs_school.svg) center center / cover no-repeat;
+  }
+}
+
+a,
+a:visited {
+  color: #090638;
+  text-decoration: none;
+}
+
+a.active {
+  color: #6b71eb;
+}
