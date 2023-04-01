@@ -1,24 +1,20 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
-interface HeaderTitle {
-  title: string;
-}
+function Header() {
+  const { pathname } = useLocation();
+  const title = pathname === '/about' ? 'about us' : pathname === '/' ? 'home' : pathname.slice(1);
 
-class Header extends React.Component<HeaderTitle> {
-  render() {
-    return (
-      <header className="header">
-        <h1 className="header__logo">Components</h1>
-        <div className="header__nav">
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/about">About Us</NavLink>
-          <NavLink to="/form">Form</NavLink>
-        </div>
-        <h2>{this.props.title}</h2>
-      </header>
-    );
-  }
+  return (
+    <header className="header">
+      <h1 className="header__logo">Components</h1>
+      <div className="header__nav">
+        <NavLink to="/">Home</NavLink>
+        <NavLink to="/about">About Us</NavLink>
+        <NavLink to="/form">Form</NavLink>
+      </div>
+      <h2>{title}</h2>
+    </header>
+  );
 }
 
 export default Header;
