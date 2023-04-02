@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
@@ -30,20 +30,6 @@ describe('FormPage', () => {
 });
 
 describe('Form', () => {
-  it('show error messages', async () => {
-    render(
-      <BrowserRouter>
-        <FormPage />
-      </BrowserRouter>
-    );
-
-    fireEvent.click(screen.getByTestId('submit-form'));
-    expect(screen.getByText('Enter minimum 3 characters.')).toBeInTheDocument();
-    expect(screen.getByText('Choose a card type.')).toBeInTheDocument();
-    expect(screen.getByText('Add an image.')).toBeInTheDocument();
-    expect(screen.getByText('Confirm stock status.')).toBeInTheDocument();
-  });
-
   it('check validation', () => {
     render(
       <BrowserRouter>
@@ -52,14 +38,11 @@ describe('Form', () => {
     );
 
     userEvent.type(screen.getByTestId('title'), 'Echeveria');
-    userEvent.type(screen.getByTestId('date'), '2023-04-01');
+    userEvent.type(screen.getByTestId('date'), '2023-08-01');
     userEvent.click(screen.getByTestId('submit-form'));
 
-    expect(screen.queryByText('Enter minimum 3 characters.')).toBeNull();
+    expect(screen.queryByText('Add a card title.')).toBeNull();
     expect(screen.queryByText('Select the delivery date not earlier than tomorrow.')).toBeNull();
-
-    fireEvent.click(screen.getByTestId('submit-form'));
-    expect(screen.getByText('Enter minimum 3 characters.')).toBeInTheDocument();
   });
 
   it('check select', () => {

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import Form from '../../components/Form';
 import FormCard from '../../components/FormCard';
-import { NewFormCard } from '../../types/types';
+import { FormData } from '../../types/types';
 
 function FormPage() {
-  const [cards, setCards] = useState<NewFormCard[]>([]);
+  const [cards, setCards] = useState<FormData<string>[]>([]);
 
-  const onCreateCard = (card: NewFormCard) => {
+  const onCreateCard = (card: FormData<string>) => {
     setCards([...cards, card]);
   };
 

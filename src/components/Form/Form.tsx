@@ -1,195 +1,152 @@
-import React from 'react';
-import { FormAddProps, FormState, NewFormCard, Errors } from '../../types/types';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { FormCreateCard, FormData } from '../../types/types';
+import { BooleanValue, ErrorsMessages } from '../../types/enums';
 import { types, discount } from '../../data/data';
-import { BooleanValue } from '../../types/enums';
 
-class Form extends React.Component<FormAddProps> {
-  form = React.createRef<HTMLFormElement>();
-  title = React.createRef<HTMLInputElement>();
-  type = React.createRef<HTMLSelectElement>();
-  date = React.createRef<HTMLInputElement>();
-  discount = React.createRef<HTMLFieldSetElement>();
-  stock = React.createRef<HTMLInputElement>();
-  image = React.createRef<HTMLInputElement>();
+function Form({ onCreateCard }: FormCreateCard) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<FormData<FileList>>({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
-  state: FormState = {
-    errors: {},
-    showСonfirmation: false,
-  };
+  const [showСonfirmation, setShowСonfirmation] = useState(false);
 
-  handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-
-    const titleValue = this.title.current?.value ?? '';
-    const typeValue = this.type.current?.value ?? '';
-    const dateValue = this.date.current?.value ?? '';
-    const discountValue = this.getDiscountValue();
-    const stockValue = this.stock?.current?.checked ? BooleanValue.Yes : '';
-    const imageValue = this.image.current?.files?.[0];
-
+  const handleFormSubmit = (data: FormData<FileList>) => {
     const card = {
+      ...data,
       id: Date.now(),
-      title: titleValue,
-      type: typeValue,
-      date: dateValue,
-      discount: discountValue,
-      stock: stockValue,
-      image: (imageValue && URL.createObjectURL(imageValue)) ?? '',
+      stock: BooleanValue.Yes,
+      image: URL.createObjectURL(data.image[0]),
     };
 
-    if (this.validateForm(card)) {
-      this.props.onCreateCard(card);
-      this.setState({ showСonfirmation: true });
-      setTimeout(() => {
-        this.setState({ showСonfirmation: false });
-      }, 1500);
-      this.form.current?.reset();
-    }
-  }
+    onCreateCard(card);
 
-  getDiscountValue() {
-    if (!this.discount.current) return '';
-    const inputs = [...this.discount.current.children].map(
-      (child) => child.lastChild as HTMLInputElement
-    );
-    return inputs.find((input) => input.checked)?.value ?? '';
-  }
+    setShowСonfirmation(true);
+    setTimeout(() => {
+      setShowСonfirmation(false);
+    }, 1500);
 
-  validateForm = (card: NewFormCard) => {
-    const { title, type, date, discount, stock, image } = card;
-
-    const errors: Errors = {};
-
-    if (title.length < 3) errors.title = 'Enter minimum 3 characters.';
-    if (!type.length) errors.type = 'Choose a card type.';
-
-    if (!(new Date(date) > new Date())) {
-      errors.date = 'Select the delivery date not earlier than tomorrow.';
-    }
-
-    if (!discount) errors.discount = 'Choose a discount size.';
-
-    if (!stock) errors.stock = 'Confirm stock status.';
-    if (!image.length) errors.image = 'Add an image.';
-
-    this.setState({ errors: errors });
-
-    return !Object.keys(errors).length;
+    reset();
   };
 
-  handleFocus(error: string) {
-    this.setState({
-      errors: {
-        ...this.state.errors,
-        [error]: null,
-      },
-    });
-  }
+  return (
+    <form className="form" onSubmit={handleSubmit(handleFormSubmit)}>
+      <div className="form__wrapper">
+        <label className="form__title">Title</label>
+        <input
+          type="text"
+          placeholder="Add title"
+          className="form__input"
+          {...register('title', {
+            required: true,
+            validate: (title) => title.length > 2 || ErrorsMessages.titleNotValid,
+          })}
+          data-testid="title"
+        />
+        {errors.title && (
+          <div className="form__error">{errors.title.message || ErrorsMessages.title}</div>
+        )}
+      </div>
 
-  render() {
-    return (
-      <form className="form" ref={this.form} onSubmit={(e) => this.handleSubmit(e)}>
-        <div className="form__wrapper">
-          <label className="form__title">Title</label>
-          <input
-            type="text"
-            placeholder="Add title"
-            ref={this.title}
-            onFocus={() => this.handleFocus('title')}
-            className="form__input"
-            data-testid="title"
-          />
-          <div className="form__error">{this.state.errors.title ?? ''}</div>
-        </div>
-
-        <div className="form__wrapper">
-          <label className="form__title">Type</label>
-          <select
-            ref={this.type}
-            onFocus={() => this.handleFocus('type')}
-            className="form__input"
-            data-testid="select"
-          >
-            {' '}
-            <option value="" key="0">
-              Choose type
+      <div className="form__wrapper">
+        <label className="form__title">Type</label>
+        <select
+          className="form__input"
+          {...register('type', {
+            required: true,
+          })}
+          data-testid="select"
+        >
+          <option value="" key="0">
+            Choose type
+          </option>
+          {types.map((type) => (
+            <option key={type.toLowerCase()} value={type}>
+              {type}
             </option>
-            {types.map((type) => (
-              <option key={type.toLowerCase()} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
-          <div className="form__error">{this.state.errors.type ?? ''}</div>
-        </div>
+          ))}
+        </select>
+        {errors.type && <div className="form__error">{ErrorsMessages.type}.</div>}
+      </div>
 
-        <div className="form__wrapper">
-          <label className="form__title">
-            Image
-            <input
-              className="form__img-input"
-              type="file"
-              accept="image/*"
-              ref={this.image}
-              onFocus={() => this.handleFocus('image')}
-            />
-          </label>
-          <div className="form__error">{this.state.errors.image ?? ''}</div>
-        </div>
+      <div className="form__wrapper">
+        <label className="form__title">
+          Image
+          <input
+            type="file"
+            accept="image/*"
+            className="form__img-input"
+            {...register('image', {
+              required: true,
+            })}
+          />
+        </label>
+        {errors.image && <div className="form__error">{ErrorsMessages.image}</div>}
+      </div>
 
-        <div className="form__wrapper">
-          <fieldset
-            ref={this.discount}
-            className="form__fieldset"
-            onFocus={() => this.handleFocus('discount')}
-          >
-            <label className="form__title">Discount</label>
-            {discount.map((val) => (
-              <label className="form__label" key={val}>
-                {val}
-                <input type="radio" name="discount" value={val} />
-              </label>
-            ))}
-          </fieldset>
-          <div className="form__error fieldset">{this.state.errors.discount ?? ''}</div>
-        </div>
+      <div className="form__wrapper">
+        <fieldset className="form__fieldset">
+          <label className="form__title">Discount</label>
+          {discount.map((val) => (
+            <label className="form__label" key={val}>
+              {val}
+              <input
+                type="radio"
+                {...register('discount', {
+                  required: true,
+                })}
+                name="discount"
+                value={val}
+              />
+            </label>
+          ))}
+        </fieldset>
+        {errors.discount && <div className="form__error fieldset">{ErrorsMessages.discount}</div>}
+      </div>
 
-        <div className="form__wrapper">
-          <label className="form__title">
-            In stock
-            <input
-              type="checkbox"
-              name="stock"
-              ref={this.stock}
-              onFocus={() => this.handleFocus('stock')}
-              data-testid="checkbox"
-            />
-          </label>
-          <div className="form__error stock">{this.state.errors.stock ?? ''}</div>
-        </div>
+      <div className="form__wrapper">
+        <label className="form__title">
+          In stock
+          <input
+            type="checkbox"
+            {...register('stock', {
+              required: true,
+            })}
+            name="stock"
+            data-testid="checkbox"
+          />
+        </label>
+        {errors.stock && <div className="form__error stock">{ErrorsMessages.stock}</div>}
+      </div>
 
-        <div className="form__wrapper">
-          <label className="form__title">
-            Delivery date
-            <input
-              type="date"
-              ref={this.date}
-              className="form__date-input"
-              onFocus={() => this.handleFocus('date')}
-              data-testid="date"
-            />
-          </label>
-          <div className="form__error">{this.state.errors.date ?? ''}</div>
-        </div>
+      <div className="form__wrapper">
+        <label className="form__title">
+          Delivery date
+          <input
+            type="date"
+            className="form__date-input"
+            {...register('date', {
+              required: true,
+              validate: (date) => new Date() < new Date(date) || ErrorsMessages.dateNotValid,
+            })}
+            data-testid="date"
+          />
+        </label>
+        {errors.date && (
+          <div className="form__error">{errors.date.message || ErrorsMessages.date}</div>
+        )}
+      </div>
 
-        <button type="submit" className="form__button" data-testid="submit-form">
-          Create card
-        </button>
+      <button type="submit" className="form__button" data-testid="submit-form">
+        Create card
+      </button>
 
-        {this.state.showСonfirmation && <div className="form__confirmation">Card created!</div>}
-      </form>
-    );
-  }
+      {showСonfirmation && <div className="form__confirmation">Card created!</div>}
+    </form>
+  );
 }
 
 export default Form;
