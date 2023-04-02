@@ -6,7 +6,7 @@ function Header() {
 
   return (
     <header className="header">
-      <h1 className="header__logo">Components</h1>
+      <h1 className="header__logo">RSS-React</h1>
       <div className="header__nav">
         <NavLink to="/">Home</NavLink>
         <NavLink to="/about">About Us</NavLink>

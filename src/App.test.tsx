@@ -10,6 +10,6 @@ describe('App', () => {
       screen.getByRole('heading', {
         level: 1,
       })
-    ).toHaveTextContent(/Components/i);
+    ).toHaveTextContent(/RSS-React/i);
   });
 });

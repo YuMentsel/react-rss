@@ -1,18 +1,16 @@
-import { describe, it } from 'vitest';
+import { describe, it, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import { ErrorsMessages } from '../../types/enums';
 
 import FormPage from './FormPage';
 
 describe('FormPage', () => {
-  it('render form', () => {
-    render(
-      <BrowserRouter>
-        <FormPage />
-      </BrowserRouter>
-    );
+  beforeEach(async () => {
+    render(<FormPage />);
+  });
 
+  it('render form', () => {
     expect(screen.getByText('Create a new card')).toBeInTheDocument();
     expect(screen.getByRole('button')).toHaveTextContent(/Create card/i);
 
@@ -27,45 +25,82 @@ describe('FormPage', () => {
 
     expect(screen.queryByText('Echeveria SC-092')).toBeNull();
   });
-});
 
-describe('Form', () => {
-  it('check validation', () => {
-    render(
-      <BrowserRouter>
-        <FormPage />
-      </BrowserRouter>
-    );
-
-    userEvent.type(screen.getByTestId('title'), 'Echeveria');
-    userEvent.type(screen.getByTestId('date'), '2023-08-01');
-    userEvent.click(screen.getByTestId('submit-form'));
-
-    expect(screen.queryByText('Add a card title.')).toBeNull();
-    expect(screen.queryByText('Select the delivery date not earlier than tomorrow.')).toBeNull();
+  it('check input value', async () => {
+    const inputValue = screen.getByTestId('title');
+    await userEvent.type(inputValue, 'Echeveria');
+    expect(inputValue).toHaveValue('Echeveria');
   });
 
-  it('check select', () => {
-    render(
-      <BrowserRouter>
-        <FormPage />
-      </BrowserRouter>
-    );
-    userEvent.selectOptions(screen.getByTestId('select'), 'Lavender');
+  it('check validation', async () => {
+    await userEvent.click(screen.getByTestId('submit-form'));
+
+    expect(screen.getByText(ErrorsMessages.title)).toBeInTheDocument();
+    expect(screen.getByText(ErrorsMessages.image)).toBeInTheDocument();
+    expect(screen.getByText(ErrorsMessages.discount)).toBeInTheDocument();
+    expect(screen.getByText(ErrorsMessages.stock)).toBeInTheDocument();
+    expect(screen.getByText(ErrorsMessages.date)).toBeInTheDocument();
+  });
+
+  it('check validation with invalid values', async () => {
+    await userEvent.type(screen.getByTestId('title'), 'Ec');
+    await userEvent.type(screen.getByTestId('date'), '2020-08-01');
+    await userEvent.click(screen.getByTestId('submit-form'));
+
+    expect(screen.queryByText(ErrorsMessages.titleNotValid)).toBeInTheDocument();
+    expect(screen.queryByText(ErrorsMessages.dateNotValid)).toBeInTheDocument();
+  });
+
+  it('check validation with valid values', async () => {
+    await userEvent.type(screen.getByTestId('title'), 'Echeveria');
+    await userEvent.type(screen.getByTestId('date'), '2024-08-01');
+    await userEvent.click(screen.getByTestId('submit-form'));
+
+    expect(screen.queryByText(ErrorsMessages.title)).toBeNull();
+    expect(screen.queryByText(ErrorsMessages.titleNotValid)).toBeNull();
+    expect(screen.queryByText(ErrorsMessages.date)).toBeNull();
+    expect(screen.queryByText(ErrorsMessages.dateNotValid)).toBeNull();
+  });
+
+  it('check select', async () => {
+    const select = screen.getByTestId('select');
+
+    await userEvent.selectOptions(select, 'Lavender');
     expect(screen.getByText('Lavender')).toBeInTheDocument();
 
-    userEvent.selectOptions(screen.getByTestId('select'), 'Sansevieria');
+    await userEvent.selectOptions(select, 'Sansevieria');
     expect(screen.getByText('Sansevieria')).toBeInTheDocument();
   });
 
-  it('show no confirmation message', () => {
-    render(
-      <BrowserRouter>
-        <FormPage />
-      </BrowserRouter>
-    );
+  it('check radio input', async () => {
+    const radio0 = screen.getByTestId('0');
+    const radio10 = screen.getByTestId('10');
+    const radio20 = screen.getByTestId('20');
+    const radio50 = screen.getByTestId('50');
 
-    userEvent.click(screen.getByTestId('submit-form'));
+    expect(radio0).not.toBeChecked();
+    expect(radio10).not.toBeChecked();
+    expect(radio20).not.toBeChecked();
+    expect(radio50).not.toBeChecked();
+
+    await userEvent.click(radio10);
+    expect(radio10).toBeChecked();
+
+    await userEvent.click(radio50);
+    expect(radio50).toBeChecked();
+  });
+
+  it('check checkbox input', async () => {
+    const checkbox = screen.getByTestId('checkbox');
+
+    expect(checkbox).not.toBeChecked();
+
+    await userEvent.click(checkbox);
+    expect(checkbox).toBeChecked();
+  });
+
+  it('show no confirmation message', async () => {
+    await userEvent.click(screen.getByTestId('submit-form'));
     expect(screen.queryByText('Card created!')).toBeNull();
   });
 });

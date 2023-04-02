@@ -100,6 +100,7 @@ function Form({ onCreateCard }: FormCreateCard) {
                 })}
                 name="discount"
                 value={val}
+                data-testid={val}
               />
             </label>
           ))}
