@@ -20,10 +20,6 @@ export interface NewFormCard {
   image: string;
 }
 
-export interface NewFormCards {
-  cards: NewFormCard[];
-}
-
 export type NewFormCardProps = {
   card: NewFormCard;
 };
@@ -44,8 +40,4 @@ export interface Errors {
 export interface FormState {
   errors: Errors;
   showСonfirmation: boolean;
-}
-
-export interface strObj {
-  ['string']: string;
 }

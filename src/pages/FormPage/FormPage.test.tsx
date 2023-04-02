@@ -75,7 +75,7 @@ describe('Form', () => {
     expect(screen.getByText('Sansevieria')).toBeInTheDocument();
   });
 
-  it('show confirmation message', () => {
+  it('show no confirmation message', () => {
     render(
       <BrowserRouter>
         <FormPage />
