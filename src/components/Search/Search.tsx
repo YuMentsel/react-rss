@@ -1,42 +1,24 @@
-import React, { ChangeEvent } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import './Search.scss';
 
-interface SearchState {
-  inputValue: string;
-}
+function Search() {
+  const [inputValue, setInputValue] = useState(localStorage.getItem('searchValue') ?? '');
 
-class Search extends React.Component {
-  state: SearchState = {
-    inputValue: '',
-  };
+  useEffect(() => {
+    localStorage.setItem('searchValue', inputValue);
+  }, [inputValue]);
 
-  componentDidMount(): void {
-    const value = localStorage.getItem('searchValue');
-    if (value) this.setState({ inputValue: value });
-  }
-
-  componentWillUnmount(): void {
-    localStorage.setItem('searchValue', this.state.inputValue);
-  }
-
-  handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    this.setState({ inputValue: value });
-  };
-
-  render() {
-    return (
-      <input
-        id="search"
-        className="search"
-        type="text"
-        placeholder="Search..."
-        data-testid="search"
-        onChange={this.handleChange}
-        value={this.state.inputValue}
-      />
-    );
-  }
+  return (
+    <input
+      id="search"
+      className="search"
+      type="text"
+      placeholder="Search..."
+      data-testid="search"
+      onChange={(e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
+      value={inputValue}
+    />
+  );
 }
 
 export default Search;
