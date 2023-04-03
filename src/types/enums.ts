@@ -7,7 +7,7 @@ export enum ErrorsMessages {
   titleNotValid = 'Enter minimum 3 characters.',
   type = 'Choose a card type.',
   date = 'Choose a delivery date.',
-  dateNotValid = 'Select the delivery date not earlier than tomorrow.',
+  dateNotValid = 'Select a date within next 5 days from tomorrow.',
   discount = 'Choose a discount size.',
   stock = 'Confirm stock status.',
   image = 'Add an image.',

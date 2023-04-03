@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { FormCreateCard, FormData } from '../../types/types';
 import { BooleanValue, ErrorsMessages } from '../../types/enums';
 import { types, discount } from '../../data/data';
+import { dateValidation } from '../../utils/utils';
 
 function Form({ onCreateCard }: FormCreateCard) {
   const {
@@ -131,7 +132,7 @@ function Form({ onCreateCard }: FormCreateCard) {
             className="form__date-input"
             {...register('date', {
               required: true,
-              validate: (date) => new Date() < new Date(date) || ErrorsMessages.dateNotValid,
+              validate: (date) => dateValidation(date) || ErrorsMessages.dateNotValid,
             })}
             data-testid="date"
           />
