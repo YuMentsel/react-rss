@@ -1,12 +1,19 @@
-import { useState, useEffect, ChangeEvent } from 'react';
+import { useState, useRef, useEffect, ChangeEvent } from 'react';
 import './Search.scss';
 
 function Search() {
   const [inputValue, setInputValue] = useState(localStorage.getItem('searchValue') ?? '');
+  const inputRef = useRef(inputValue);
 
   useEffect(() => {
-    localStorage.setItem('searchValue', inputValue);
+    inputRef.current = inputValue;
   }, [inputValue]);
+
+  useEffect(() => {
+    return () => {
+      localStorage.setItem('searchValue', inputRef.current);
+    };
+  }, []);
 
   return (
     <input
