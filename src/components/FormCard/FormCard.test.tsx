@@ -1,7 +1,7 @@
 import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
-import { FormData } from '../../types/types';
+import { FormData } from '../../types/interfaces';
 import FormCard from './FormCard';
 
 const card: FormData<string> = {

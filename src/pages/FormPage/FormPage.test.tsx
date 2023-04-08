@@ -53,7 +53,7 @@ describe('FormPage', () => {
 
   it('check validation with valid values', async () => {
     await userEvent.type(screen.getByTestId('title'), 'Echeveria');
-    await userEvent.type(screen.getByTestId('date'), '2023-04-07');
+    await userEvent.type(screen.getByTestId('date'), '2023-04-10');
     await userEvent.click(screen.getByTestId('submit-form'));
 
     expect(screen.queryByText(ErrorsMessages.title)).toBeNull();

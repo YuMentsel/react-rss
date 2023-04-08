@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FormCreateCard, FormData } from '../../types/types';
+import { FormCreateCard, FormData } from '../../types/interfaces';
 import { BooleanValue, ErrorsMessages } from '../../types/enums';
 import { types, discount } from '../../data/data';
 import { dateValidation } from '../../utils/utils';

@@ -1,4 +1,4 @@
-import { FormDataProps } from '../../types/types';
+import { FormDataProps } from '../../types/interfaces';
 
 function FormCard({ card }: FormDataProps) {
   const { title, type, date, discount, stock, image } = card;

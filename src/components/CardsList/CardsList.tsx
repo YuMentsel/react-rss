@@ -1,14 +1,11 @@
 import Card from '../Card';
-import { CardProps } from '../../types/types';
-import cardData from '../../data/plants.json';
+import { Character, CharacterProps } from '../../types/interfaces';
 
-function CardsList() {
+function CardsList({ data }: CharacterProps) {
   return (
     <section className="cards">
-      {cardData.map((item: CardProps) => (
-        <div key={item.id} className="card">
-          <Card {...item} />
-        </div>
+      {data.map((item: Character) => (
+        <Card key={item.id} {...item} />
       ))}
     </section>
   );

@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect, ChangeEvent } from 'react';
-import './Search.scss';
+import { useState, useRef, useEffect, ChangeEvent, FormEvent } from 'react';
+import { SearchProps } from '../../types/interfaces';
 
-function Search() {
+function Search({ setSearch }: SearchProps) {
   const [inputValue, setInputValue] = useState(localStorage.getItem('searchValue') ?? '');
   const inputRef = useRef(inputValue);
 
@@ -15,16 +15,24 @@ function Search() {
     };
   }, []);
 
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    localStorage.setItem('searchValue', inputValue ?? '');
+    setSearch(inputValue);
+  };
+
   return (
-    <input
-      id="search"
-      className="search"
-      type="text"
-      placeholder="Search..."
-      data-testid="search"
-      onChange={(e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
-      value={inputValue}
-    />
+    <form onSubmit={handleSubmit}>
+      <input
+        id="search"
+        className="search"
+        type="text"
+        placeholder="Search..."
+        data-testid="search"
+        onChange={(e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
+        value={inputValue}
+      />
+    </form>
   );
 }
 
