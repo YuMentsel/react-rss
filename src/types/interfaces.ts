@@ -69,4 +69,5 @@ export interface ModalProps {
 
 export interface ModalCardProps {
   cardId: number;
+  setModal: () => void;
 }

@@ -3,6 +3,7 @@ import Search from '../../components/Search';
 import CardsList from '../../components/CardsList';
 import Modal from '../../components/Modal';
 import ModalCard from '../../components/ModalCard';
+import Spinner from '../../components/Spinner';
 import { Character, CharacterData } from '../../types/interfaces';
 import { BASE_URL } from '../../types/constants';
 
@@ -33,24 +34,19 @@ function HomePage() {
 
   const setModal = () => setIsModalOpen(false);
 
-  const content = isLoading ? (
-    <div>Loading...</div>
-  ) : (
-    <CardsList data={data} openModal={openModal} />
-  );
-
   return (
     <main className="main center">
       <Search setSearch={setSearch} />
-      {content}
+      {isLoading ? (
+        <Spinner />
+      ) : data.length ? (
+        <CardsList data={data} openModal={openModal} />
+      ) : (
+        <div>Not Found{/*  */}</div>
+      )}
       {isModalOpen && (
         <Modal setModal={setModal}>
-          <>
-            <ModalCard cardId={modalCardID} />
-            <div className="close" onClick={setModal}>
-              ✖
-            </div>
-          </>
+          <ModalCard cardId={modalCardID} setModal={setModal} />
         </Modal>
       )}
     </main>
