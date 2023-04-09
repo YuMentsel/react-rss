@@ -1,10 +1,10 @@
-import { Character } from '../../types/interfaces';
+import { CharacterProps } from '../../types/interfaces';
 
-function Card(props: Character) {
-  const { image, species, name } = props;
+function Card({ data, openModal }: CharacterProps) {
+  const { id, image, species, name } = data;
 
   return (
-    <div className="card">
+    <div className="card" onClick={() => openModal(id)}>
       <div className="card__photo" style={{ backgroundImage: `url(${image})` }}></div>
       <div className="card__info">
         <div className="card__species">{species}</div>

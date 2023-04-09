@@ -1,3 +1,5 @@
+import { ReactElement } from 'react';
+
 export interface FormData<T> {
   id: number;
   title: string;
@@ -50,6 +52,21 @@ export interface CharacterData {
   results?: Character[];
 }
 
-export interface CharacterProps {
+export interface CharactersProps {
   data: Character[];
+  openModal: (id: number) => void;
+}
+
+export interface CharacterProps {
+  data: Character;
+  openModal: (id: number) => void;
+}
+
+export interface ModalProps {
+  children: ReactElement;
+  setModal: () => void;
+}
+
+export interface ModalCardProps {
+  cardId: number;
 }

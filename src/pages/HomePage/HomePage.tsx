@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
 import Search from '../../components/Search';
-import CardsList from '../../components/CardsList/CardsList';
+import CardsList from '../../components/CardsList';
+import Modal from '../../components/Modal';
+import ModalCard from '../../components/ModalCard';
 import { Character, CharacterData } from '../../types/interfaces';
-
-const BASE_URL = 'https://rickandmortyapi.com/api/character';
+import { BASE_URL } from '../../types/constants';
 
 function HomePage() {
   const [search, setSearch] = useState(localStorage.getItem('searchValue') ?? '');
   const [data, setData] = useState<Character[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalCardID, setModalCardID] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -23,12 +26,33 @@ function HomePage() {
     })();
   }, [search]);
 
-  const content = isLoading ? <div>Loading...</div> : <CardsList data={data} />;
+  const openModal = (id: number) => {
+    setIsModalOpen(true);
+    setModalCardID(id);
+  };
+
+  const setModal = () => setIsModalOpen(false);
+
+  const content = isLoading ? (
+    <div>Loading...</div>
+  ) : (
+    <CardsList data={data} openModal={openModal} />
+  );
 
   return (
     <main className="main center">
       <Search setSearch={setSearch} />
       {content}
+      {isModalOpen && (
+        <Modal setModal={setModal}>
+          <>
+            <ModalCard cardId={modalCardID} />
+            <div className="close" onClick={setModal}>
+              ✖
+            </div>
+          </>
+        </Modal>
+      )}
     </main>
   );
 }

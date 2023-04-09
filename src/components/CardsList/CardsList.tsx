@@ -1,11 +1,11 @@
 import Card from '../Card';
-import { Character, CharacterProps } from '../../types/interfaces';
+import { Character, CharactersProps } from '../../types/interfaces';
 
-function CardsList({ data }: CharacterProps) {
+function CardsList({ data, openModal }: CharactersProps) {
   return (
     <section className="cards">
       {data.map((item: Character) => (
-        <Card key={item.id} {...item} />
+        <Card key={item.id} data={item} openModal={openModal} />
       ))}
     </section>
   );
