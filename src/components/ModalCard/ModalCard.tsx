@@ -24,7 +24,7 @@ function ModalCard({ cardId, setModal }: ModalCardProps) {
     <Spinner />
   ) : data ? (
     <>
-      <div className="card modal-card">
+      <div className="card modal-card" data-testid="modal-card">
         <div className="card__photo" style={{ backgroundImage: `url(${data.image})` }}></div>
         <div className="card__info">
           <div className="card__species">{data.species}</div>
@@ -39,15 +39,15 @@ function ModalCard({ cardId, setModal }: ModalCardProps) {
           </div>
           <div>
             <span>Origin: </span>
-            {data.origin.name}
+            {data.origin?.name && ''}
           </div>
           <div>
             <span>Location: </span>
-            {data.location.name}
+            {data.location?.name && ''}
           </div>
         </div>
       </div>
-      <div className="close" onClick={setModal}>
+      <div className="close" onClick={setModal} data-testid="close">
         ✖
       </div>
     </>
