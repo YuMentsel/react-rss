@@ -13,6 +13,7 @@ function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalCardID, setModalCardID] = useState(0);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -20,8 +21,8 @@ function HomePage() {
         const res = await fetch(`${BASE_URL}/?name=${search}`);
         const { results }: CharacterData = await res.json();
         results ? setData(results) : setData([]);
-      } catch (err) {
-        console.log(err);
+      } catch {
+        setError(true);
       }
       setIsLoading(false);
     })();
@@ -39,10 +40,12 @@ function HomePage() {
       <Search setSearch={setSearch} />
       {isLoading ? (
         <Spinner />
+      ) : error ? (
+        <div>Failed to fetch</div>
       ) : data.length ? (
         <CardsList data={data} openModal={openModal} />
       ) : (
-        <div>Not Found{/*  */}</div>
+        <div>Not Found</div>
       )}
       {isModalOpen && (
         <Modal setModal={setModal}>

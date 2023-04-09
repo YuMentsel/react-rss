@@ -6,6 +6,7 @@ import { Character, ModalCardProps } from '../../types/interfaces';
 function ModalCard({ cardId, setModal }: ModalCardProps) {
   const [data, setData] = useState<Character>();
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -13,8 +14,8 @@ function ModalCard({ cardId, setModal }: ModalCardProps) {
         const res = await fetch(`${BASE_URL}/${cardId}`);
         const card: Character = await res.json();
         setData(card);
-      } catch (err) {
-        console.log(err);
+      } catch {
+        setError(true);
       }
       setIsLoading(false);
     })();
@@ -22,6 +23,8 @@ function ModalCard({ cardId, setModal }: ModalCardProps) {
 
   return isLoading ? (
     <Spinner />
+  ) : error ? (
+    <div className="error">Failed to fetch. Click on the Background!</div>
   ) : data ? (
     <>
       <div className="card modal-card" data-testid="modal-card">
