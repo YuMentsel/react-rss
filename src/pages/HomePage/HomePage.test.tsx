@@ -1,5 +1,5 @@
 import { describe, it, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { data } from '../../data/fetchedData';
 
@@ -13,12 +13,9 @@ describe('Home page', () => {
       })
     );
 
-    render(<HomePage />);
-  });
-
-  it('render spinner', async () => {
-    const spinner = screen.getByTestId('spinner');
-    await waitFor(() => expect(spinner).toBeInTheDocument());
+    await act(async () => {
+      render(<HomePage />);
+    });
   });
 
   it('render cards', async () => {

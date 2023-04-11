@@ -1,5 +1,5 @@
 import { describe, it, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, act, waitFor } from '@testing-library/react';
 import { card } from '../../data/fetchedData';
 
 import ModalCard from './ModalCard';
@@ -13,11 +13,15 @@ describe('Home page', () => {
     );
 
     const setModal = vi.fn();
-    render(<ModalCard cardId={0} setModal={setModal} />);
+
+    await act(async () => {
+      render(<ModalCard cardId={0} setModal={setModal} />);
+    });
   });
 
   it('render card', async () => {
     const card = await waitFor(() => screen.getByTestId('modal-card'));
+
     expect(card).toBeInTheDocument();
     expect(screen.queryByTestId('spinner')).toBeNull();
     expect(screen.getByTestId('close')).toBeInTheDocument();
