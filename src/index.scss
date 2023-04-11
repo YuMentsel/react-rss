@@ -24,13 +24,9 @@ body {
   max-width: 1440px;
   padding: 15px 15px 0;
   text-align: center;
+  overflow: auto;
 }
 
-@import
-  './layout/Layout',
-  './components/Search/Search',
-  './components/Card/Card',
-  './components/Form/Form',
-  './components/FormCard/FormCard',
-  './components/Modal/Modal',
+@import './layout/Layout', './components/Search/Search', './components/Card/Card',
+  './components/Form/Form', './components/FormCard/FormCard', './components/Modal/Modal',
   './components/Spinner/Spinner';

@@ -42,11 +42,11 @@ function ModalCard({ cardId, setModal }: ModalCardProps) {
           </div>
           <div>
             <span>Origin: </span>
-            {data.origin?.name && ''}
+            {data.origin?.name}
           </div>
           <div>
             <span>Location: </span>
-            {data.location?.name && ''}
+            {data.location?.name}
           </div>
         </div>
       </div>
