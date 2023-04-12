@@ -1,10 +1,12 @@
-import { describe, it } from 'vitest';
+import { describe, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import Search from '.';
 
 describe('Search', () => {
   it('render search input', () => {
-    render(<Search />);
+    const setSearch = vi.fn();
+    render(<Search setSearch={setSearch} />);
+
     expect(screen.getByTestId('search')).toBeInTheDocument();
   });
 });
@@ -18,7 +20,9 @@ describe('Search', () => {
     const value = 'input value';
     localStorage.setItem('searchValue', value);
 
-    render(<Search />);
+    const setSearch = vi.fn();
+    render(<Search setSearch={setSearch} />);
+
     expect(screen.getByTestId('search')).toHaveValue(value);
   });
 
@@ -26,7 +30,9 @@ describe('Search', () => {
     const value = '';
     localStorage.setItem('searchValue', value);
 
-    render(<Search />);
+    const setSearch = vi.fn();
+    render(<Search setSearch={setSearch} />);
+
     expect(screen.getByTestId('search')).toHaveValue(value);
   });
 });
