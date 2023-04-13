@@ -1,0 +1,84 @@
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px 0 40px 0;
+  justify-content: center;
+  gap: 30px;
+  color: #9e9e9e;
+}
+
+.card {
+  width: 330px;
+  min-height: 400px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 20px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.5s;
+  &:hover {
+    scale: 1.03;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 20px, rgba(0, 0, 0, 0.15) 0px 5px 10px;
+  }
+
+  &__photo {
+    height: 330px;
+    width: 330px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 10px;
+    .modal-card & {
+      width: 400px;
+      height: 400px;
+    }
+  }
+
+  &__info {
+    text-align: left;
+    padding: 10px 20px 18px;
+    font-size: 0.9em;
+    .modal-card & {
+      width: 270px;
+    }
+  }
+
+  &__species {
+    color: #558d30;
+    font-weight: 500;
+    font-size: 0.8em;
+    .modal-card & {
+      font-size: 1.2em;
+    }
+  }
+
+  &__title {
+    color: #6b71eb;
+    margin: 0;
+    font-size: 1.1em;
+    font-weight: 500;
+    line-height: 1.1;
+    .modal-card & {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+    }
+  }
+
+  &.modal-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 690px;
+    cursor: auto;
+    background-color: #ffffff;
+    transition: none;
+    z-index: 2;
+    &:hover {
+      scale: none;
+      box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 20px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
+    }
+
+    span {
+      color: #558d30;
+    }
+  }
+}
