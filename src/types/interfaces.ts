@@ -18,10 +18,6 @@ export interface FormCreateCard {
   onCreateCard: (newCard: FormData<string>) => void;
 }
 
-export interface SearchProps {
-  setSearch: (value: string) => void;
-}
-
 export interface CharacterLocation {
   name: string;
   url: string;
@@ -43,18 +39,13 @@ export interface Character {
 }
 
 export interface CharacterData {
-  info?: {
+  info: {
     count: number;
     pages: number;
     next: string | null;
     prev: string | null;
   };
-  results?: Character[];
-}
-
-export interface CharactersProps {
-  data: Character[];
-  openModal: (id: number) => void;
+  results: Character[];
 }
 
 export interface CharacterProps {

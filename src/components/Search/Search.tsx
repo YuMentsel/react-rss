@@ -1,36 +1,27 @@
-import { useState, useRef, useEffect, ChangeEvent, FormEvent } from 'react';
-import { SearchProps } from '../../types/interfaces';
+import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { setSearchValue } from '../../redux/slices/searchSlice';
 
-function Search({ setSearch }: SearchProps) {
-  const [inputValue, setInputValue] = useState(localStorage.getItem('searchValue') ?? '');
-  const inputRef = useRef(inputValue);
-
-  useEffect(() => {
-    inputRef.current = inputValue;
-  }, [inputValue]);
-
-  useEffect(() => {
-    return () => {
-      localStorage.setItem('searchValue', inputRef.current);
-    };
-  }, []);
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    localStorage.setItem('searchValue', inputValue ?? '');
-    setSearch(inputValue);
-  };
+function Search() {
+  const dispatch = useAppDispatch();
+  const searchValue = useAppSelector((state) => state.search.value);
+  const [value, setValue] = useState(searchValue);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        dispatch(setSearchValue(value));
+      }}
+    >
       <input
         id="search"
         className="search"
         type="text"
         placeholder="Search..."
         data-testid="search"
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
-        value={inputValue}
+        onChange={(e) => setValue(e.target.value)}
+        value={value}
       />
     </form>
   );

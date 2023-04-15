@@ -1,30 +1,15 @@
-import { useState, useEffect } from 'react';
 import Spinner from '../../components/Spinner';
-import { BASE_URL } from '../../types/constants';
-import { Character, ModalCardProps } from '../../types/interfaces';
+import { useGetCharacterByIdQuery } from '../../redux/api';
+
+import { ModalCardProps } from '../../types/interfaces';
 
 function ModalCard({ cardId, setModal }: ModalCardProps) {
-  const [data, setData] = useState<Character>();
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await fetch(`${BASE_URL}/${cardId}`);
-        const card: Character = await res.json();
-        setData(card);
-      } catch {
-        setError(true);
-      }
-      setIsLoading(false);
-    })();
-  }, [cardId]);
+  const { data, isLoading, isError } = useGetCharacterByIdQuery(cardId);
 
   return isLoading ? (
     <Spinner />
-  ) : error ? (
-    <div className="error">Failed to fetch. Click on the Background!</div>
+  ) : isError ? (
+    <div className="error">Failed to fetch. Click on the background!</div>
   ) : data ? (
     <>
       <div className="card modal-card" data-testid="modal-card">
@@ -42,11 +27,11 @@ function ModalCard({ cardId, setModal }: ModalCardProps) {
           </div>
           <div>
             <span>Origin: </span>
-            {data.origin?.name}
+            {data.origin.name}
           </div>
           <div>
             <span>Location: </span>
-            {data.location?.name}
+            {data.location.name}
           </div>
         </div>
       </div>
