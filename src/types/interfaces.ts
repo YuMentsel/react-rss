@@ -46,15 +46,8 @@ export interface CharacterData {
 
 export interface CharacterProps {
   data: Character;
-  openModal: (id: number) => void;
 }
 
 export interface ModalProps {
   children: ReactElement;
-  setModal: () => void;
-}
-
-export interface ModalCardProps {
-  cardId: number;
-  setModal: () => void;
 }

@@ -1,9 +1,11 @@
 import Spinner from '../../components/Spinner';
 import { useGetCharacterByIdQuery } from '../../redux/api';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
+import { closeModal } from '../../redux/slices/modalSlice';
 
-import { ModalCardProps } from '../../types/interfaces';
-
-function ModalCard({ cardId, setModal }: ModalCardProps) {
+function ModalCard() {
+  const dispatch = useAppDispatch();
+  const cardId = useAppSelector((state) => state.modal.id);
   const { data, isLoading, isError } = useGetCharacterByIdQuery(cardId);
 
   return isLoading ? (
@@ -35,7 +37,7 @@ function ModalCard({ cardId, setModal }: ModalCardProps) {
           </div>
         </div>
       </div>
-      <div className="close" onClick={setModal} data-testid="close">
+      <div className="close" onClick={() => dispatch(closeModal())} data-testid="close">
         ✖
       </div>
     </>
