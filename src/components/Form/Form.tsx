@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FormCreateCard, FormData } from '../../types/interfaces';
+import { FormData } from '../../types/interfaces';
 import { BooleanValue, ErrorsMessages } from '../../types/enums';
 import { types, discount } from '../../data/data';
 import { dateValidation } from '../../utils/utils';
+import { useAppDispatch } from '../../redux/hooks';
+import { addFormCard } from '../../redux/slices/formCardsSlice';
 
-function Form({ onCreateCard }: FormCreateCard) {
+function Form() {
   const {
     register,
     handleSubmit,
@@ -15,6 +17,8 @@ function Form({ onCreateCard }: FormCreateCard) {
 
   const [showСonfirmation, setShowСonfirmation] = useState(false);
 
+  const dispatch = useAppDispatch();
+
   const handleFormSubmit = (data: FormData<FileList>) => {
     const card = {
       ...data,
@@ -23,7 +27,7 @@ function Form({ onCreateCard }: FormCreateCard) {
       image: URL.createObjectURL(data.image[0]),
     };
 
-    onCreateCard(card);
+    dispatch(addFormCard(card));
 
     setShowСonfirmation(true);
     setTimeout(() => {

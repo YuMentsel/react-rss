@@ -14,10 +14,6 @@ export interface FormDataProps {
   card: FormData<string>;
 }
 
-export interface FormCreateCard {
-  onCreateCard: (newCard: FormData<string>) => void;
-}
-
 export interface CharacterLocation {
   name: string;
   url: string;
