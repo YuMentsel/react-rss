@@ -1,13 +1,13 @@
-import { describe, it, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it } from 'vitest';
+import { screen } from '@testing-library/react';
 import { card } from '../../data/fetchedData';
+import { renderWithProviders } from '../../../testUtils';
 
 import Card from './Card';
 
 describe('Card', () => {
-  beforeEach(async () => {
-    const openModal = vi.fn();
-    render(<Card data={card} openModal={openModal} />);
+  beforeEach(() => {
+    renderWithProviders(<Card data={card} />);
   });
 
   it('render card', () => {

@@ -1,11 +1,14 @@
 import { describe, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
-
+import { screen } from '@testing-library/react';
+import { renderWithProviders } from '../testUtils';
 import App from './App';
 
 describe('App', () => {
-  it('render page', () => {
-    render(<App />);
+  beforeEach(() => {
+    renderWithProviders(<App />);
+  });
+
+  it('render page', async () => {
     expect(
       screen.getByRole('heading', {
         level: 1,

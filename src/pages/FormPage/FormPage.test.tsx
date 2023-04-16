@@ -1,13 +1,14 @@
-import { describe, it, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it } from 'vitest';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ErrorsMessages } from '../../types/enums';
+import { renderWithProviders } from '../../../testUtils';
 
 import FormPage from './FormPage';
 
 describe('FormPage', () => {
-  beforeEach(async () => {
-    render(<FormPage />);
+  beforeEach(() => {
+    renderWithProviders(<FormPage />);
   });
 
   it('render form', () => {
@@ -53,7 +54,7 @@ describe('FormPage', () => {
 
   it('check validation with valid values', async () => {
     await userEvent.type(screen.getByTestId('title'), 'Echeveria');
-    await userEvent.type(screen.getByTestId('date'), '2023-04-15');
+    await userEvent.type(screen.getByTestId('date'), '2023-04-22');
     await userEvent.click(screen.getByTestId('submit-form'));
 
     expect(screen.queryByText(ErrorsMessages.title)).toBeNull();

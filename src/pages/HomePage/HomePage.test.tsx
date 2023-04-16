@@ -1,21 +1,13 @@
-import { describe, it, vi } from 'vitest';
-import { render, screen, act, waitFor } from '@testing-library/react';
+import { describe, it } from 'vitest';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { data } from '../../data/fetchedData';
+import { renderWithProviders } from '../../../testUtils';
 
 import HomePage from './HomePage';
 
 describe('Home page', () => {
-  beforeEach(async () => {
-    global.fetch = vi.fn().mockImplementation(() =>
-      Promise.resolve({
-        json: () => data,
-      })
-    );
-
-    await act(async () => {
-      render(<HomePage />);
-    });
+  beforeEach(() => {
+    renderWithProviders(<HomePage />);
   });
 
   it('render cards', async () => {

@@ -19,6 +19,6 @@
     "esModuleInterop": true,
     "baseUrl": "./src"
   },
-  "include": ["src", "setupTests.ts"],
+  "include": ["src", "setupTests.ts", "testUtils.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
