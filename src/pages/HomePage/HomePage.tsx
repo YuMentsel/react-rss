@@ -9,20 +9,20 @@ import { Character } from '../../types/interfaces';
 
 function HomePage() {
   const searchValue = useAppSelector((state) => state.search.value);
-  const { data = [], isLoading, isError } = useGetCharactersQuery(searchValue);
+  const { currentData = [], isFetching, isError } = useGetCharactersQuery(searchValue);
 
   const isModalOpen = useAppSelector((state) => state.modal.isOpen);
 
   return (
     <main className="main center">
       <Search />
-      {isLoading ? (
+      {isFetching ? (
         <Spinner />
       ) : isError ? (
         <div>Not Found</div>
       ) : (
         <section className="cards">
-          {data.map((card: Character) => (
+          {currentData.map((card: Character) => (
             <Card key={card.id} data={card} />
           ))}
         </section>

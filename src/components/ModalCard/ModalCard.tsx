@@ -6,34 +6,34 @@ import { closeModal } from '../../redux/slices/modalSlice';
 function ModalCard() {
   const dispatch = useAppDispatch();
   const cardId = useAppSelector((state) => state.modal.id);
-  const { data, isLoading, isError } = useGetCharacterByIdQuery(cardId);
+  const { currentData, isFetching, isError } = useGetCharacterByIdQuery(cardId);
 
-  return isLoading ? (
+  return isFetching ? (
     <Spinner />
   ) : isError ? (
     <div className="error">Failed to fetch. Click on the background!</div>
-  ) : data ? (
+  ) : currentData ? (
     <>
       <div className="card modal-card" data-testid="modal-card">
-        <div className="card__photo" style={{ backgroundImage: `url(${data.image})` }}></div>
+        <div className="card__photo" style={{ backgroundImage: `url(${currentData.image})` }}></div>
         <div className="card__info">
-          <div className="card__species">{data.species}</div>
-          <div className="card__title">{data.name}</div>
+          <div className="card__species">{currentData.species}</div>
+          <div className="card__title">{currentData.name}</div>
           <div>
             <span>Status: </span>
-            {data.status}
+            {currentData.status}
           </div>
           <div>
             <span>Gender: </span>
-            {data.gender}
+            {currentData.gender}
           </div>
           <div>
             <span>Origin: </span>
-            {data.origin.name}
+            {currentData.origin.name}
           </div>
           <div>
             <span>Location: </span>
-            {data.location.name}
+            {currentData.location.name}
           </div>
         </div>
       </div>
