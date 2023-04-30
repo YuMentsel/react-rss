@@ -1,4 +1,4 @@
-import { describe, it } from 'vitest';
+import { describe, it, vi } from 'vitest';
 import { screen, waitFor } from '@testing-library/react';
 import { renderWithProviders } from '../../../testUtils';
 
@@ -6,7 +6,7 @@ import ModalCard from './ModalCard';
 
 describe('Home page', () => {
   it('render card', async () => {
-    renderWithProviders(<ModalCard />);
+    renderWithProviders(<ModalCard id={1} closeModal={vi.fn()} />);
     const card = await waitFor(() => screen.getByTestId('modal-card'));
 
     expect(card).toBeInTheDocument();
