@@ -16,7 +16,8 @@
     "coverage": "vitest --coverage",
     "cypress:open-e2e": "cypress open --e2e",
     "cypress:e2e": "start-server-and-test dev http-get://localhost:5173 cypress:open-e2e",
-    "coverage:e2e": "npx nyc cypress run && npx nyc report --reporter=text-summary"
+    "coverage:e2e": "npm run cypress:clean && npx nyc cypress run && npx nyc report --reporter=text-summary",
+    "cypress:clean": "npx rimraf coverage && npx rimraf .nyc_output"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
