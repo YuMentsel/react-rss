@@ -50,4 +50,10 @@ export interface CharacterProps {
 
 export interface ModalProps {
   children: ReactElement;
+  closeModal: () => void;
+}
+
+export interface ModalCardProps {
+  id: number;
+  closeModal: () => void;
 }

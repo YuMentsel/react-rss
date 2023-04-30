@@ -19,6 +19,12 @@
     "esModuleInterop": true,
     "baseUrl": "./src"
   },
+  "ts-node": {
+    "esm": true,
+    "transpileOnly": true,
+    "experimentalResolver": true,
+    "experimentalSpecifierResolution": "node"
+  },
   "include": ["src", "setupTests.ts", "testUtils.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

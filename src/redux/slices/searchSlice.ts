@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from './createSlice';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 interface SearchState {
