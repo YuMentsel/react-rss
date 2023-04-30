@@ -1,0 +1,42 @@
+.modal,
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.overlay {
+  background-color: #ffffffc4;
+  backdrop-filter: blur(2px);
+  z-index: 2;
+}
+
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__wrapper {
+    position: relative;
+  }
+}
+
+.close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  width: 30px;
+  text-align: center;
+  user-select: none;
+  z-index: 3;
+}
+
+.error {
+  position: relative;
+  z-index: 3;
+  font-size: 20px;
+}
