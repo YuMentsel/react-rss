@@ -6,3 +6,9 @@ export function dateValidation(date: string) {
 
   return currDate < deliveryDate && deliveryDate < maxDeliveryDate;
 }
+
+export function getValidDate() {
+  const date = new Date();
+  date.setDate(date.getDate() + 3);
+  return date.toISOString().slice(0, 10);
+}

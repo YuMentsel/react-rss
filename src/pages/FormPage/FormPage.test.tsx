@@ -3,6 +3,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ErrorsMessages } from '../../types/enums';
 import { renderWithProviders } from '../../../testUtils';
+import { getValidDate } from '../../utils/utils';
 
 import FormPage from './FormPage';
 
@@ -53,11 +54,8 @@ describe('FormPage', () => {
   });
 
   it('check validation with valid values', async () => {
-    const date = new Date();
-    date.setDate(date.getDate() + 3);
-
     await userEvent.type(screen.getByTestId('title'), 'Echeveria');
-    await userEvent.type(screen.getByTestId('date'), date.toISOString().slice(0, 10));
+    await userEvent.type(screen.getByTestId('date'), getValidDate());
     await userEvent.click(screen.getByTestId('submit-form'));
 
     expect(screen.queryByText(ErrorsMessages.title)).toBeNull();

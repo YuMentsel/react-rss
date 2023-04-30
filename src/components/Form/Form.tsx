@@ -74,7 +74,7 @@ function Form() {
             </option>
           ))}
         </select>
-        {errors.type && <div className="form__error">{ErrorsMessages.type}.</div>}
+        {errors.type && <div className="form__error">{ErrorsMessages.type}</div>}
       </div>
 
       <div className="form__wrapper">
@@ -84,6 +84,7 @@ function Form() {
             type="file"
             accept="image/*"
             className="form__img-input"
+            data-testid="image"
             {...register('image', {
               required: true,
             })}

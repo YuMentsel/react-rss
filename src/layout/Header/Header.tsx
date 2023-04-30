@@ -9,7 +9,9 @@ function Header() {
       <h1 className="header__logo">RSS-React</h1>
       <div className="header__nav">
         <NavLink to="/">Home</NavLink>
-        <NavLink to="/about">About Us</NavLink>
+        <NavLink to="/about" data-testid="about-link">
+          About Us
+        </NavLink>
         <NavLink to="/form">Form</NavLink>
       </div>
       <h2>{title}</h2>

@@ -4,11 +4,11 @@ function FormCard({ card }: FormDataProps) {
   const { title, type, date, discount, stock, image } = card;
 
   return (
-    <div className="form-card">
+    <div className="form-card" data-testid="form-card">
       <div className="form-card__img">
         <img src={image} alt="form-card-img" />
       </div>
-      <h3>Title: {title}</h3>
+      <h3 data-testid="form-title">Title: {title}</h3>
       <div>
         <span>Type: </span>
         {type}

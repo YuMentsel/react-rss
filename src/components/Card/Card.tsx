@@ -13,7 +13,9 @@ function Card({ data }: CharacterProps) {
         <div className="card__photo" style={{ backgroundImage: `url(${image})` }}></div>
         <div className="card__info">
           <div className="card__species">{species}</div>
-          <div className="card__title">{name}</div>
+          <div className="card__title" data-testid="card-title">
+            {name}
+          </div>
         </div>
       </div>
       {showModal && (

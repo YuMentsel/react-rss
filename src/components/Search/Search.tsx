@@ -9,6 +9,7 @@ function Search() {
 
   return (
     <form
+      data-testid="search-form"
       onSubmit={(e) => {
         e.preventDefault();
         dispatch(setSearchValue(value));

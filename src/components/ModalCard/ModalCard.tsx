@@ -16,19 +16,19 @@ function ModalCard({ id, closeModal }: ModalCardProps) {
         <div className="card__info">
           <div className="card__species">{currentData.species}</div>
           <div className="card__title">{currentData.name}</div>
-          <div>
+          <div data-testid="modal-status">
             <span>Status: </span>
             {currentData.status}
           </div>
-          <div>
+          <div data-testid="modal-gender">
             <span>Gender: </span>
             {currentData.gender}
           </div>
-          <div>
+          <div data-testid="modal-origin">
             <span>Origin: </span>
             {currentData.origin.name}
           </div>
-          <div>
+          <div data-testid="modal-location">
             <span>Location: </span>
             {currentData.location.name}
           </div>
