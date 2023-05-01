@@ -6,7 +6,6 @@
   "exclude": [
     "cypress/**/*.*",
     "**/main.tsx",
-    "**/utils.ts",
     "**/*.d.ts",
     "**/*.cy.tsx",
     "**/*.cy.ts"

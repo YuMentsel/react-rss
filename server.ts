@@ -29,8 +29,7 @@ const createServer = async (root = process.cwd()) => {
     app.use(vite.middlewares);
   } else {
     app.use(
-      '/assets',
-      (await import('serve-static')).default(path.resolve(__dirname, './dist/client/assets'), {
+      (await import('serve-static')).default(path.resolve(__dirname, './dist/client'), {
         index: false,
       })
     );
