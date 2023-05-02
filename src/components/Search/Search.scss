@@ -1,0 +1,16 @@
+.search {
+  margin: 50px auto;
+  width: 600px;
+  height: 40px;
+  padding: 8px 15px;
+  border-radius: 20px;
+  border: 1px #9e9e9e solid;
+  color: #6b71eb;
+  font-size: 1.1em;
+  outline: none;
+  &::placeholder {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9em;
+    color: #9e9e9e;
+  }
+}
